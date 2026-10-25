@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volkswagen Global Auto Hub | AI Buy, Sell & Tracking</title>
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    :root {
+      --vw-navy: #001e50;
+      --vw-blue: #1b365d;
+      --vw-accent: #00b0f0;
+      --vw-light-blue: #e8f4fc;
+      --vw-gray-bg: #f4f6f9;
+      --vw-dark-text: #0d1b2a;
+      --vw-card-shadow: 0 12px 28px rgba(0, 30, 80, 0.08);
+      --vw-transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--vw-gray-bg);
+      color: var(--vw-dark-text);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    header {
+      background-color: var(--vw-navy);
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .brand-logo i {
+      font-size: 2rem;
+      color: var(--vw-accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--vw-transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--vw-accent);
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    select.global-select {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      outline: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    select.global-select option {
+      background-color: var(--vw-navy);
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, rgba(0, 30, 80, 0.92), rgba(27, 54, 93, 0.85)), 
+                  url('https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      color: white;
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 2rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge i {
+      color: var(--vw-accent);
+    }
+
+    /* Layout Containers */
+    .section-container {
+      max-width: 1280px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--vw-navy);
+    }
+
+    .section-subtitle {
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    /* AI Tools Section (Grid Layout) */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--vw-card-shadow);
+      border: 1px solid rgba(0,0,0,0.04);
+      transition: var(--vw-transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--vw-light-blue);
+      color: var(--vw-navy);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 0.4rem;
+      color: var(--vw-dark-text);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #dcdfe6;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: var(--vw-transition);
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--vw-accent);
+      box-shadow: 0 0 0 3px rgba(0, 176, 240, 0.15);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--vw-navy);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      transition: var(--vw-transition);
+    }
+
+    .btn:hover {
+      background: var(--vw-blue);
+      box-shadow: 0 4px 12px rgba(0, 30, 80, 0.2);
+    }
+
+    .btn-accent {
+      background: var(--vw-accent);
+      color: #fff;
+    }
+
+    .btn-accent:hover {
+      background: #0095cd;
+    }
+
+    /* AI Valuation Result Box */
+    .ai-result-box {
+      margin-top: 1.5rem;
+      padding: 1.2rem;
+      background: var(--vw-light-blue);
+      border-left: 4px solid var(--vw-accent);
+      border-radius: 8px;
+      display: none;
+    }
+
+    /* Vehicle Tracking Section */
+    .tracking-status-wrapper {
+      margin-top: 1.5rem;
+      display: none;
+    }
+
+    .tracker-timeline {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 2rem 0;
+    }
+
+    .tracker-timeline::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #e0e0e0;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .tracker-progress {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 4px;
+      background: var(--vw-accent);
+      transform: translateY(-50%);
+      z-index: 1;
+      width: 66%;
+      transition: width 1s ease;
+    }
+
+    .step {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border: 3px solid #e0e0e0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #666;
+    }
+
+    .step.active {
+      border-color: var(--vw-accent);
+      background: var(--vw-accent);
+      color: #fff;
+    }
+
+    .step-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+    }
+
+    /* Marketplace Section */
+    .marketplace-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .car-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--vw-card-shadow);
+      border: 1px solid rgba(0,0,0,0.05);
+      transition: var(--vw-transition);
+    }
+
+    .car-card:hover {
+      transform: translateY(-50%);
+    }
+
+    .car-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #eef2f5;
+    }
+
+    .car-details {
+      padding: 1.2rem;
+    }
+
+    .car-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .car-meta {
+      font-size: 0.85rem;
+      color: #666;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .car-price {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--vw-navy);
+      margin-bottom: 1rem;
+    }
+
+    /* Floating AI Chatbot Widget */
+    .chat-widget {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 2000;
+    }
+
+    .chat-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--vw-navy);
+      color: white;
+      border: none;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--vw-transition);
+    }
+
+    .chat-toggle:hover {
+      transform: scale(1.08);
+      background: var(--vw-blue);
+    }
+
+    .chat-window {
+      position: absolute;
+      bottom: 75px;
+      right: 0;
+      width: 360px;
+      height: 480px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .chat-header {
+      background: var(--vw-navy);
+      color: white;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-body {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .chat-msg {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      max-width: 80%;
+    }
+
+    .chat-msg.bot {
+      background: var(--vw-light-blue);
+      color: var(--vw-navy);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+    }
+
+    .chat-msg.user {
+      background: var(--vw-navy);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+    }
+
+    .chat-footer {
+      padding: 0.8rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      font-size: 0.88rem;
+    }
+
+    .chat-footer button {
+      background: var(--vw-navy);
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <i class="fa-solid fa-car-side"></i> Volkswagen AI Hub
+      </a>
+      <ul class="nav-links">
+        <li><a href="#buy">Buy Cars</a></li>
+        <li><a href="#sell">Sell & AI Appraisal</a></li>
+        <li><a href="#tracking">Global Tracking</a></li>
+      </ul>
+      <div class="nav-controls">
+        <select class="global-select" id="countrySelect" onchange="updateCurrency()">
+          <option value="USD">🇺🇸 USA (USD)</option>
+          <option value="EUR">🇩🇪 Germany (EUR)</option>
+          <option value="GBP">🇬🇧 UK (GBP)</option>
+          <option value="INR">🇮🇳 India (INR)</option>
+          <option value="JPY">🇯🇵 Japan (JPY)</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Global Volkswagen Buying, Selling & Live AI Tracking</h1>
+      <p>Instant AI valuation, smart cross-border vehicle tracking, and real-time inventory from official global channels.</p>
+      <div class="hero-badges">
+        <div class="badge"><i class="fa-solid fa-robot"></i> AI Valuation Engine</div>
+        <div class="badge"><i class="fa-solid fa-location-dot"></i> Live VIN / Order Tracking</div>
+        <div class="badge"><i class="fa-solid fa-globe"></i> 140+ Countries Supported</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Valuation & Global Tracking Section -->
+  <div class="section-container">
+    <div class="grid-2">
+      
+      <!-- AI Instant Valuation & Selling -->
+      <div class="card" id="sell">
+        <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h2 style="margin-bottom: 0.5rem;">AI Instant Car Valuation & Sale</h2>
+        <p class="section-subtitle" style="margin-bottom: 1.5rem;">Sell your Volkswagen globally. Get an instant market price estimate calculated by AI.</p>
+        
+        <form id="aiValuationForm" onsubmit="calculateAIValuation(event)">
+          <div class="form-group">
+            <label>Volkswagen Model</label>
+            <select class="form-control" id="valModel" required>
+              <option value="">Select Model</option>
+              <option value="Golf R">Golf R / GTI</option>
+              <option value="ID.4">ID.4 Electric</option>
+              <option value="Tiguan">Tiguan</option>
+              <option value="Virtus">Virtus</option>
+              <option value="Passat">Passat</option>
+              <option value="Touareg">Touareg</option>
+            </select>
+          </div>
+          
+          <div class="grid-2" style="gap: 1rem;">
+            <div class="form-group">
+              <label>Year</label>
+              <input type="number" class="form-control" id="valYear" min="2010" max="2026" value="2022" required />
+            </div>
+            <div class="form-group">
+              <label>Mileage (km)</label>
+              <input type="number" class="form-control" id="valMileage" value="35000" placeholder="e.g. 45000" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Condition</label>
+            <select class="form-control" id="valCondition">
+              <option value="1.1">Excellent (Like New)</option>
+              <option value="1.0">Good (Normal wear)</option>
+              <option value="0.85">Fair (Needs minor repairs)</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-accent"><i class="fa-solid fa-calculator"></i> Run AI Appraisal</button>
+        </form>
+
+        <div class="ai-result-box" id="aiResultBox">
+          <h4 style="color: var(--vw-navy);"><i class="fa-solid fa-circle-check"></i> AI Valuation Complete</h4>
+          <p style="font-size: 1.4rem; font-weight: 800; margin: 0.5rem 0;" id="aiEstimatedPrice">$0</p>
+          <p style="font-size: 0.85rem; color: #555;" id="aiAdviceText">Analyzing live global market data...</p>
+        </div>
+      </div>
+
+      <!-- Real-Time Order & Vehicle Tracking -->
+      <div class="card" id="tracking">
+        <div class="card-icon"><i class="fa-solid fa-truck-fast"></i></div>
+        <h2 style="margin-bottom: 0.5rem;">Global Vehicle / Order Tracking</h2>
+        <p class="section-subtitle" style="margin-bottom: 1.5rem;">Track production, shipping, and port delivery using your VIN or Tracking ID.</p>
+        
+        <div class="form-group">
+          <label>Enter VIN or Tracking Code</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" class="form-control" id="trackingCodeInput" placeholder="e.g. VW-8829-X9" value="VW-8829-X9">
+            <button class="btn" style="width: auto;" onclick="trackVehicle()"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+          <small style="color: #777;">Sample codes: <strong>VW-8829-X9</strong> (Shipping) or <strong>VW-1042-DE</strong> (Factory)</small>
+        </div>
+
+        <div class="tracking-status-wrapper" id="trackingWrapper">
+          <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.9rem;">
+            <span>Status: <strong id="trackStatusText" style="color: var(--vw-accent);">In Transit across Atlantic</strong></span>
+            <span>Est. Delivery: <strong id="trackEta">Aug 18, 2026</strong></span>
+          </div>
+
+          <div class="tracker-timeline">
+            <div class="tracker-progress" id="trackerProgressBar"></div>
+            <div class="step active" title="Order Confirmed">1</div>
+            <div class="step active" title="Factory Production">2</div>
+            <div class="step active" title="Port Shipment">3</div>
+            <div class="step" title="Delivered">4</div>
+          </div>
+
+          <div class="step-labels">
+            <span>Ordered</span>
+            <span>Factory</span>
+            <span>Shipping</span>
+            <span>Delivered</span>
+          </div>
+
+          <div style="margin-top: 1rem; font-size: 0.85rem; background: #f9f9f9; padding: 10px; border-radius: 6px;" id="trackLocationDetails">
+            <i class="fa-solid fa-location-crosshairs"></i> <strong>Current GPS Location:</strong> Port of Bremerhaven Departure -> En Route to New York Harbor.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Marketplace Section -->
+  <section class="section-container" id="buy">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Verified Volkswagen Global Listings</h2>
+        <p class="section-subtitle">Browse certified new and pre-owned VW vehicles across global distribution networks.</p>
+      </div>
+    </div>
+
+    <div class="marketplace-grid" id="carMarketplace">
+      <!-- Generated via JS dynamically -->
+    </div>
+  </section>
+
+  <!-- AI Chatbot Float -->
+  <div class="chat-widget">
+    <button class="chat-toggle" onclick="toggleChat()"><i class="fa-solid fa-headset"></i></button>
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-robot"></i>
+          <strong>VW AI Sales & Support Assistant</strong>
+        </div>
+        <i class="fa-solid fa-xmark" style="cursor: pointer;" onclick="toggleChat()"></i>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-msg bot">
+          Hello! I am your Volkswagen AI Assistant. Ask me about car specs, tracking orders, or market values!
+        </div>
+      </div>
+      <div class="chat-footer">
+        <input type="text" id="chatInput" placeholder="Ask AI something..." onkeypress="handleChatKey(event)">
+        <button onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Global State & Currency Multipliers
+    const currencies = {
+      USD: { symbol: '$', rate: 1.0 },
+      EUR: { symbol: '€', rate: 0.92 },
+      GBP: { symbol: '£', rate: 0.79 },
+      INR: { symbol: '₹', rate: 83.5 },
+      JPY: { symbol: '¥', rate: 155.0 }
+    };
+
+    let currentCurrency = 'USD';
+
+    // Mock Database of Volkswagen Cars
+    const carInventory = [
+      {
+        id: 1,
+        title: "2024 Volkswagen ID.4 Pro",
+        type: "Electric SUV",
+        basePriceUSD: 38990,
+        mileage: "0 km (New)",
+        img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80",
+        country: "Germany / Global"
+      },
+      {
+        id: 2,
+        title: "2023 Volkswagen Golf R Performance",
+        type: "Hatchback (AWD)",
+        basePriceUSD: 44500,
+        mileage: "12,000 km",
+        img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80",
+        country: "USA / Export"
+      },
+      {
+        id: 3,
+        title: "2024 Volkswagen Tiguan R-Line",
+        type: "Compact SUV",
+        basePriceUSD: 34200,
+        mileage: "5,500 km",
+        img: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80",
+        country: "Global"
+      },
+      {
+        id: 4,
+        title: "2022 Volkswagen Virtus GT 1.5 TSI",
+        type: "Sedan",
+        basePriceUSD: 21000,
+        mileage: "22,000 km",
+        img: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=600&q=80",
+        country: "India / LATAM"
+      }
+    ];
+
+    // Initialize Page
+    document.addEventListener("DOMContentLoaded", () => {
+      renderInventory();
+    });
+
+    // Update Currency across UI
+    function updateCurrency() {
+      currentCurrency = document.getElementById('countrySelect').value;
+      renderInventory();
+    }
+
+    function formatPrice(amountInUSD) {
+      const c = currencies[currentCurrency];
+      const converted = Math.round(amountInUSD * c.rate);
+      return `${c.symbol}${converted.toLocaleString()}`;
+    }
+
+    // Render Marketplace Cards
+    function renderInventory() {
+      const container = document.getElementById('carMarketplace');
+      container.innerHTML = carInventory.map(car => `
+        <div class="car-card">
+          <img src="${car.img}" alt="${car.title}" class="car-img" />
+          <div class="car-details">
+            <div class="car-title">${car.title}</div>
+            <div class="car-meta">
+              <span><i class="fa-solid fa-gauge"></i> ${car.mileage}</span>
+              <span><i class="fa-solid fa-globe"></i> ${car.country}</span>
+            </div>
+            <div class="car-price">${formatPrice(car.basePriceUSD)}</div>
+            <button class="btn" onclick="buyCarPrompt('${car.title}')">
+              <i class="fa-solid fa-cart-shopping"></i> Purchase / Request Import
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // AI Valuation Algorithm Simulation
+    function calculateAIValuation(e) {
+      e.preventDefault();
+      const model = document.getElementById('valModel').value;
+      const year = parseInt(document.getElementById('valYear').value);
+      const mileage = parseInt(document.getElementById('valMileage').value);
+      const conditionMult = parseFloat(document.getElementById('valCondition').value);
+
+      // Base rates by model
+      const baseValues = {
+        "Golf R": 42000,
+        "ID.4": 40000,
+        "Tiguan": 32000,
+        "Virtus": 20000,
+        "Passat": 28000,
+        "Touareg": 65000
+      };
+
+      let basePrice = baseValues[model] || 30000;
+      
+      // Depreciation calculation
+      const age = 2026 - year;
+      let ageDepreciation = age * 0.08; // 8% drop per year
+      let mileageDepreciation = (mileage / 10000) * 0.02; // 2% per 10k km
+
+      let estimatedUSD = basePrice * (1 - ageDepreciation - mileageDepreciation) * conditionMult;
+      if (estimatedUSD < 3000) estimatedUSD = 3000;
+
+      // Render Result
+      document.getElementById('aiEstimatedPrice').innerText = formatPrice(estimatedUSD);
+      document.getElementById('aiAdviceText').innerText = 
+        `AI Analysis: Fair market valuation for ${year} ${model} based on current global supply chain demands and mileage profile.`;
+      document.getElementById('aiResultBox').style.display = 'block';
+    }
+
+    // Tracking Simulator
+    function trackVehicle() {
+      const code = document.getElementById('trackingCodeInput').value.trim().toUpperCase();
+      const wrapper = document.getElementById('trackingWrapper');
+      
+      if (!code) {
+        alert("Please enter a valid VIN or Tracking Code.");
+        return;
+      }
+
+      wrapper.style.display = 'block';
+
+      if (code.includes('1042') || code.includes('FAC')) {
+        document.getElementById('trackerProgressBar').style.width = '33%';
+        document.getElementById('trackStatusText').innerText = "In Factory Production (Wolfsburg Assembly)";
+        document.getElementById('trackEta').innerText = "Sept 04, 2026";
+        document.getElementById('trackLocationDetails').innerHTML = 
+          `<i class="fa-solid fa-industry"></i> <strong>Status:</strong> Chassis painted and undergoing AI Automated Quality Check.`;
+      } else {
+        document.getElementById('trackerProgressBar').style.width = '66%';
+        document.getElementById('trackStatusText').innerText = "In Transit Across Atlantic Ocean";
+        document.getElementById('trackEta').innerText = "Aug 18, 2026";
+        document.getElementById('trackLocationDetails').innerHTML = 
+          `<i class="fa-solid fa-ship"></i> <strong>Current Position:</strong> Vessel Grand Aurora - Lat 42.8, Long -34.2. Next Port: New York.`;
+      }
+    }
+
+    // Chatbot Functions
+    function toggleChat() {
+      const window = document.getElementById('chatWindow');
+      window.style.display = (window.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function handleChatKey(e) {
+      if (e.key === 'Enter') sendChatMessage();
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      appendMessage(text, 'user');
+      input.value = '';
+
+      // AI Response Logic Simulation
+      setTimeout(() => {
+        let response = "I can help you buy, sell, or track any Volkswagen vehicle worldwide. Try entering your VIN code above or running an AI appraisal!";
+        const query = text.toLowerCase();
+
+        if (query.includes('buy') || query.includes('price')) {
+          response = "You can browse our global listings above or switch your local currency at the top header!";
+        } else if (query.includes('track') || query.includes('vin')) {
+          response = "To track a vehicle, enter your Tracking Code (like 'VW-8829-X9') in the Tracking section above.";
+        } else if (query.includes('sell') || query.includes('value')) {
+          response = "Use our AI Instant Appraisal tool to get an instant market valuation based on current global trends.";
+        }
+
+        appendMessage(response, 'bot');
+      }, 600);
+    }
+
+    function appendMessage(text, sender) {
+      const body = document.getElementById('chatBody');
+      const msg = document.createElement('div');
+      msg.className = `chat-msg ${sender}`;
+      msg.innerText = text;
+      body.appendChild(msg);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function buyCarPrompt(title) {
+      alert(`Thank you for your interest in the ${title}! Our automated import & sales desk will contact you via email.`);
+    }
+  </script>
+</body>
+</html>
